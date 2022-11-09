@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "rakumanaonline",
         'USER': 'root',
-        'PASSWORD': "",
+        'PASSWORD': "33@7I2933o7io2",
         'HOST': "127.0.0.1"
     }
 }
@@ -120,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 AUTH_USER_MODEL = "users.UserProfile"
 
-LANGUAGE_CODE = 'ja'
+LANGUAGE_CODE = 'jan'
 
 TIME_ZONE = 'Asia/Tokyo'
 
