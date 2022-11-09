@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}コースの詳細-RakuManaOnline{% endblock %}
+{% block custom_bread %}
+<section>
+    <div class="wp">
+        <ul  class="crumbs">
+            <li><a href="{% url 'index' %}">トップページ</a>></li>
+            <li><a href="{% url 'course:list' %}">コースのリスト</a>></li>
+            <li>コースの詳細</li>
+        </ul>
+    </div>
+</section>
+{% endblock %}
+{% block content %}
+    <section>
+	<div class="wp">
+		<div class="groupPurchase_detail detail">
+			<div class="toppro">
+				<div class="left">
+					<div class="picbox">
+						<div class="tb-booth tb-pic">
+							<img width="440" height="445" src="{{ course.image.url }}" class="jqzoom" />
+						</div>
+
+					</div>
+					<div class="des">
+						<h1 title="{{ course.name }}">{{ course.name }}</h1>
+						<span class="key">{{ course.desc }}</span>
+						<div class="prize">
+							<span class="fl">難易度：<i class="key">{{ course.get_degree_display }}</i></span>
+							<span class="fr">受講人数：{{ course.students }}</span>
+						</div>
+						<ul class="parameter">
+							<li><span class="pram word3">総時間：</span><span>{{ course.learn_times }}</span></li>
+                            <li><span class="pram word3">レクチャー数：</span><span>{{ course.lesson_nums }}</span></li>
+                            <li><span class="pram word3">コースのカテゴリ：</span><span title="">{{ course.category }}</span></li>
+							<li class="piclist"><span class="pram word4">受講生：</span>
+                                {% for user_course in course.usercourse_set.all|slice:3 %}
+                                    <span class="pic"><img width="40" height="40" src="{{ user_course.user.image.url }}"/></span>
+                                {% endfor %}
+							</li>
+						</ul>
+						<div class="btns">
+							<div class="btn colectgroupbtn"  id="jsLeftBtn">
+                                  {% if has_fav_course %}お気に入りした{% else %}お気に入り{% endif %}
+                            </div>
+                                <div class="buy btn"><a style="color: white" href="{% url 'course:lesson' course.id %}">受講をスタート</a></div>
+						</div>
+					</div>
+{#                    <div class="group-share-box">#}
+{#                        <div class="bdsharebuttonbox"#}
+{#                             data-text="django开始了"#}
+{#                             data-desc="我在#慕课网#发现了"#}
+{#                             data-comment=""#}
+{#                             data-url="/group/groupdetail/15/">#}
+{#                            <span class="fl">分享到：</span>#}
+{#                            <a href="#" class="bds_more" data-cmd="more"></a>#}
+{#                            <a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a>#}
+{#                            <a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a>#}
+{#                            <a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a>#}
+{#                            <a title="分享到人人网" href="#" class="bds_renren" data-cmd="renren"></a>#}
+{#                            <a title="分享到微信" href="#" class="bds_weixin" data-cmd="weixin"></a>#}
+{#                        </div>#}
+{#                    </div>#}
+				</div>
+				<div class="right">
+					<div class="head">
+						<h1>教育機関</h1>
+						<p>信頼機関，豊富内容</p>
+					</div>
+					<div class="pic">
+                        <a href="{% url 'org:home' course.course_org.id %}">
+                            <img width="150" height="80" src="{{ course.course_org.image.url }}"/>
+                        </a>
+                    </div>
+					<a href="{% url 'org:home' course.course_org.id %}">
+                        <h2 class="center" title="{{ course.course_org.name }}">{{ course.course_org.name }}</h2>
+                    </a>
+					<div class="btn  notlogin
+					     "data-favid="14" id="jsRightBtn">
+                         {% if has_fav_org %}お気に入りした{% else %}お気に入り{% endif %}
+                    </div>
+					<div class="clear">
+						<ul>
+                            <li>
+                                <span>レクチャー数：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   {{ course.course_org.course_set.all.count }}</span>
+                            </li>
+                            <li>
+                                <span>講師数：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {{ course.course_org.teacher_set.all.count }}</span>
+                            </li>
+							<li>所在地：&nbsp;&nbsp;{{ course.course_org.address }}</li>
+                            {% if course.course_org.is_gold %}
+							<li>特選&nbsp;:
+								    <img title="人気教育機関", src="{% static 'images/gold.png' %}"/>
+							</li>
+                            {% endif %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+    <section>
+	<div class="wp">
+		<div class="list groupPurchase_detail_pro">
+			<div class="left layout">
+				<div class="head">
+					<ul class="tab_header">
+						<li class="active">コースの詳細</li>
+					</ul>
+				</div>
+				<div class="tab_cont tab_cont1">
+                    {% autoescape off %}{{ course.detail }} {% endautoescape %}
+				</div>
+				<div class="tab_cont tab_cont2" >
+					<div class="comment">
+						<div class="comenlist">
+
+	                    </div>
+					</div>
+				</div>
+			</div>
+			<div class="right layout">
+				<div class="head">よく一緒に受講されるコース</div>
+                <div class="group_recommend">
+                    {% for course in related_courses %}
+                        <dl>
+                            <dt>
+                                <a target="_blank" href="">
+                                    <img width="240" height="220" class="scrollLoading" src="{{ course.image.url }}"/>
+                                </a>
+                            </dt>
+                            <dd>
+                                <a target="_blank" href=""><h2> {{ course.name }}</h2></a>
+                                <span class="fl">総時間：<i class="key">{{ course.learn_times }}</i></span>
+                            </dd>
+                        </dl>
+                    {% endfor %}
+
+
+                </div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
+
+{% block custom_js %}
+
+<script type="text/javascript">
+//收藏分享
+function add_fav(current_elem, fav_id, fav_type){
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url:"{% url 'op:fav' %}",
+        data:{'fav_id':fav_id, 'fav_type':fav_type},
+        async: true,
+        beforeSend:function(xhr, settings){
+            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+        },
+        success: function(data) {
+            if(data.status == 'fail'){
+                if(data.msg == 'ログインされていません'){
+                    window.location.href="{% url 'login' %}";
+                }else{
+                    alert(data.msg)
+                }
+            }else if(data.status == 'success'){
+                current_elem.text(data.msg)
+            }
+        },
+    });
+}
+$(document).ready(function() {
+    $('#jsLeftBtn').on('click', function () {
+        add_fav($(this), {{ course.id }}, 1);
+    });
+});
+
+$(document).ready(function() {
+	$('#jsRightBtn').on('click', function(){
+		add_fav($(this), {{ course.course_org.id }}, 2);
+	});
+});
+
+</script>
+
+{% endblock %}

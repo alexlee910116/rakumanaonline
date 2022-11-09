@@ -1,0 +1,69 @@
+{% extends "org_base.html" %}
+
+{% block title %}机构トップページ{% endblock %}
+
+{% block right_form %}
+    <div class="right companycenter layout grouping" >
+		<div class="head">
+			<h1>全部コース</h1>
+			<a class="green fr more" href="{% url 'org:course' course_org.id %}">もっとを見る  >  </a>
+		</div>
+		<div class="brief group_list">
+            {% for course in all_courses %}
+                 <div class="module1_5 box">
+                    <a href="{% url 'org:course_detail' course.id %}"><img width="214" src="{{ MEDIA_URL}}{{ course.image }}"/></a>
+                    <div class="des">
+                        <a href="{% url 'org:course_detail' course.id %}"><h2>{{ course.name }}</h2></a>
+                        <span class="fl">総時間：<i class="key">{{ course.learn_times }}</i></span>
+                        <span class="fr">受講人数：{{ course.students }}</span>
+                    </div>
+                    <div class="bottom">
+                        <span class="fl">{{ course_org.name }}</span>
+                         <span class="star fr  notlogin
+                            " data-favid="13"  data-fav-type="4">
+                            0
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+
+		</div>
+	</div>
+    <div class="right companycenter layout" >
+    <div class="head">
+        <h1>教育機関の講師</h1>
+        <a class="green fr more" href="{% url 'org:teacher' course_org.id %}">もっとを見る  >  </a>
+    </div>
+
+    <div class="diarys">
+        {% for teacher in all_teacher %}
+            <div class="module5 share company-diary-box" style="padding:10px 0;">
+            <div class="left">
+                <a href="{% url 'org:teacher_detail' teacher.id %}"><img class="pic" src="{{ MEDIA_URL }}{{ teacher.image }}"/>
+                <p>講師名：{{ teacher.name }}</p>
+            </div>
+            <div class="right">
+                <div class="top">
+                    <div class="fl">
+                        <h1>{{ teacher.work_position }}</h1></a>
+                        <span>勤務年数：{{ teacher.work_years }}</span>
+                    </div>
+                </div>
+                <div class="middle" style="border-bottom:0;">{{ teacher.points }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+</div>
+<div class="right companycenter layout" >
+    <div class="head">
+        <h1>教育機関の説明</h1>
+        <a class="green fr more" href="{% url 'org:desc' course_org.id %}">もっとを見る  >  </a>
+    </div>
+    <div class="cont">&nbsp;
+        {{ course_org.desc }}
+</div>
+{% endblock %}
