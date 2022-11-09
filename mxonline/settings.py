@@ -120,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 AUTH_USER_MODEL = "users.UserProfile"
 
-LANGUAGE_CODE = 'jan'
+LANGUAGE_CODE = 'ja'
 
 TIME_ZONE = 'Asia/Tokyo'
 
