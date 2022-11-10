@@ -139,7 +139,7 @@ USE_TZ = False
 # ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
 
 # 云片网相关设置
 YP_apikey = "7b31f19ee8244518be4a5505a7ade969"
